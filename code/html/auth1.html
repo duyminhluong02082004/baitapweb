@@ -31,7 +31,7 @@
         <div class="header-middle">
             <div class="container header-middle-cont">
                 <div class="toplogo">
-                    <a href="index.html">
+                    <a href="../html/index.html">
                         <img src="../img/logo.png" >
                     </a>
                 </div>
@@ -45,18 +45,18 @@
                             </form>
                         </li>
                         <li class="topauth">
-                            <a href="auth1.html">
+                            <a href="../html/auth1.html">
                                 <i class="fa fa-lock"></i>
                                 <span class="shop-menu-ttl">Đăng kí</span>
                             </a>
-                            <a href="auth.html">
+                            <a href="../html/auth.html">
                                 <span class="shop-menu-ttl">Đăng nhập</span>
                             </a>
                         </li>
 
                         <li>
                             <div class="h-cart">
-                                <a href="cart.html">
+                                <a href="../html/cart.html">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span class="shop-menu-ttl">Giỏ hàng</span>
                                      <!-- (
@@ -81,33 +81,33 @@
                         <a class="topcatalog-btn" href="#">Danh mục SP</a>
                         <ul class="topcatalog-list">
                             <li>
-                                <a href="LapTop.html">
+                                <a href="../html/LapTop.html">
                                 Linh kiện bán dẫn
                             </a>
                                 <i class="fa fa-angle-right"></i>
                                 <ul>
                                     <li>
-                                        <a href="LapTopAcer.html">
+                                        <a href="../html/LapTopAcer.html">
                                         Diodes
                                     </a>
                                     </li>
                                     <li>
-                                        <a href="LapTopasus.html">
+                                        <a href="../html/LapTopasus.html">
                                         Transistors
                                     </a>
                                     </li>
                                     <li>
-                                        <a href="LapTopMsi.html">
+                                        <a href="../html/LapTopMsi.html">
                                         Triac _ Diac
                                     </a> 
                                     </li>
                                     <li>
-                                        <a href="LapTopDell.html">
+                                        <a href="../html/LapTopDell.html">
                                         FET
                                     </a> 
                                     </li>
                                     <li>
-                                        <a href="LapTopLenovo.html">
+                                        <a href="../html/LapTopLenovo.html">
                                         Thyristor - SCR
                                     </a>
                                     </li>
@@ -115,19 +115,19 @@
                             </li>
                             
                             <li>
-                                <a href="catalog-list.html">
+                                <a href="../html/catalog-list.html">
                                 Linh Kiện
                             </a>
                                 <i class="fa fa-angle-right"></i>
                                 <ul>
                                     <li>
-                                        <a href="catalog-list.html">
+                                        <a href="../html/catalog-list.html">
                                         CPU
                                     </a>
                                         
                                     </li>
                                     <li>
-                                        <a href="catalog-list.html">
+                                        <a href="../html/catalog-list.html">
                                         RAM
                                     </a>
                                         
@@ -144,12 +144,12 @@
 
                     <ul class="mainmenu">
                         <li>
-                            <a href="index.html" class="active">
+                            <a href="../html/index.html" class="active">
                             Trang Chủ
                         </a>
                         </li>
                         <li >
-                            <a href="aboutus.html">
+                            <a href="../html/aboutus.html">
                             About Us
                         </a>
                         </li>
@@ -170,12 +170,12 @@
                         </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="contacts.html">
+                                    <a href="../html/contacts.html">
                                     Contacts
                                 </a>
                                 </li>
                                 <li>
-                                    <a href="404.html">
+                                    <a href="../html/404.html">
                                     Tin Công Nghệ
                                 </a>
                                 </li>
@@ -209,7 +209,7 @@
 
         <ul class="b-crumbs">
             <li>
-                <a href="index.html">
+                <a href="../html/index.html">
                     Home
                 </a>
             </li>
@@ -278,6 +278,9 @@
                     $('#register-form').submit(function(e){
                         e.preventDefault(); // Ngăn chặn form gửi dữ liệu mặc định
                         
+                        // Lấy dữ liệu từ Local Storage
+                        var usersData = JSON.parse(localStorage.getItem('users')) || [];
+
                         // Kiểm tra dữ liệu nhập vào
                         var isValid = true;
                         var fullname = $('#reg_fullname').val().trim();
@@ -299,12 +302,12 @@
                         }
         
                         // Kiểm tra email
-                        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        var emailPattern = /^[^\s@]+@gmail\.com$/;
                         if (email === "") {
                             $('#tbEmail').html("*Bắt buộc nhập !!").addClass("error");
                             isValid = false;
                         } else if (!emailPattern.test(email)) {
-                            $('#tbEmail').html("*Email không hợp lệ !!").addClass("error");
+                            $('#tbEmail').html("*Email không hợp lệ !! Chuỗi không chứa khoảng trắng, cuối chuỗi là @gmail.com").addClass("error");
                             isValid = false;
                         } else {
                             $('#tbEmail').html("").removeClass("error");
@@ -339,7 +342,15 @@
                             $('#tbPhone').html("*Bắt buộc nhập !!").addClass("error");
                             isValid = false;
                         } else if (!phonePattern.test(phone)) {
-                            $('#tbPhone').html("*Số điện thoại không hợp lệ !!").addClass("error");
+                            $('#tbPhone').html("*Số điện thoại không hợp lệ !! 0xxx-xxx-xxx !!").addClass("error");
+                            isValid = false;
+                        } else {
+                            $('#tbPhone').html("").removeClass("error");
+                        }
+
+                        // Kiểm tra số điện thoại đã được sử dụng chưa
+                        if (usersData.some(user => user.phone === phone)) {
+                            $('#tbPhone').html("*Số điện thoại đã được sử dụng cho một tài khoản khác !!").addClass("error");
                             isValid = false;
                         } else {
                             $('#tbPhone').html("").removeClass("error");
@@ -347,18 +358,43 @@
         
                         // Kiểm tra hợp lệ
                         // Nếu hợp lệ, lưu thông tin vào Local Storage và thông báo đăng ký thành công
+                    //     if (isValid) {
+                    //         // Lưu thông tin tài khoản vào Local Storage
+                    //         localStorage.setItem('email', email);
+                    //         localStorage.setItem('password', password);
+                            
+                    //         alert('Đăng ký thành công!');
+
+                    //         // Chuyển hướng đến trang đăng nhập
+                    //         window.location.href = "../html/auth.html";
+                    //     } else {
+                    //         alert('Đăng ký thất bại! Vui lòng kiểm tra lại thông tin đăng ký.');
+                    //     }
+                    // });
+
+                         // Nếu thông tin hợp lệ, lưu vào Local Storage và chuyển hướng đến trang đăng nhập
                         if (isValid) {
                             // Lưu thông tin tài khoản vào Local Storage
-                            localStorage.setItem('email', email);
-                            localStorage.setItem('password', password);
+                            var newUser = {
+                                fullname: fullname,
+                                email: email,
+                                password: password,
+                                phone: phone
+                            };
+                            usersData.push(newUser);
+                            localStorage.setItem('users', JSON.stringify(usersData));
                             
                             alert('Đăng ký thành công!');
+                            
+                            // Chuyển hướng đến trang đăng nhập
+                            window.location.href = "../html/auth.html";
                         } else {
                             alert('Đăng ký thất bại! Vui lòng kiểm tra lại thông tin đăng ký.');
                         }
                     });
                 });
             </script>
+
 <!-- Đăng ký - end -->
 
 
