@@ -30,7 +30,7 @@
         <div class="header-middle">
             <div class="container header-middle-cont">
                 <div class="toplogo">
-                    <a href="index.html">
+                    <a href="../index.html">
                         <img src="../img/logo.png" >
                     </a>
                 </div>
@@ -44,18 +44,18 @@
                             </form>
                         </li>
                         <li class="topauth">
-                            <a href="auth1.html">
+                            <a href="../html/auth1.html">
                                 <i class="fa fa-lock"></i>
                                 <span class="shop-menu-ttl">Đăng kí</span>
                             </a>
-                            <a href="auth.html">
+                            <a href="../html/auth.html">
                                 <span class="shop-menu-ttl">Đăng nhập</span>
                             </a>
                         </li>
 
                         <li>
                             <div class="h-cart">
-                                <a href="cart.html">
+                                <a href="../html/cart.html">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span class="shop-menu-ttl">Giỏ hàng</span>
                                      <!-- (
@@ -79,34 +79,34 @@
                     <div class="topcatalog">
                         <a class="topcatalog-btn" href="#">Danh mục SP</a>
                         <ul class="topcatalog-list">
-                            <<li>
-                                <a href="LapTop.html">
+                            <li>
+                                <a href="../html/LapTop.html">
                                 Linh kiện bán dẫn
                             </a>
                                 <i class="fa fa-angle-right"></i>
                                 <ul>
                                     <li>
-                                        <a href="LapTopAcer.html">
+                                        <a href="../html/LapTopAcer.html">
                                         Diodes
                                     </a>
                                     </li>
                                     <li>
-                                        <a href="LapTopasus.html">
+                                        <a href="../html/LapTopasus.html">
                                         Transistors
                                     </a>
                                     </li>
                                     <li>
-                                        <a href="LapTopMsi.html">
+                                        <a href="../html/LapTopMsi.html">
                                         Triac _ Diac
                                     </a> 
                                     </li>
                                     <li>
-                                        <a href="LapTopDell.html">
+                                        <a href="../html/LapTopDell.html">
                                         FET
                                     </a> 
                                     </li>
                                     <li>
-                                        <a href="LapTopLenovo.html">
+                                        <a href="../html/LapTopLenovo.html">
                                         Thyristor - SCR
                                     </a>
                                     </li>
@@ -114,19 +114,19 @@
                             </li>
                             
                             <li>
-                                <a href="catalog-list.html">
+                                <a href="../html/catalog-list.html">
                                 Linh Kiện
                             </a>
                                 <i class="fa fa-angle-right"></i>
                                 <ul>
                                     <li>
-                                        <a href="catalog-list.html">
+                                        <a href="../html/catalog-list.html">
                                         CPU
                                     </a>
                                         
                                     </li>
                                     <li>
-                                        <a href="catalog-list.html">
+                                        <a href="../html/catalog-list.html">
                                         RAM
                                     </a>
                                         
@@ -143,12 +143,12 @@
 
                     <ul class="mainmenu">
                         <li>
-                            <a href="index.html" class="active">
+                            <a href="../html/index.html" class="active">
                             Trang Chủ
                         </a>
                         </li>
                         <li >
-                            <a href="aboutus.html">
+                            <a href="../html/aboutus.html">
                             About Us
                         </a>
                         </li>
@@ -169,12 +169,12 @@
                         </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="contacts.html">
+                                    <a href="../html/contacts.html">
                                     Contacts
                                 </a>
                                 </li>
                                 <li>
-                                    <a href="404.html">
+                                    <a href="../html/404.html">
                                     Tin Công Nghệ
                                 </a>
                                 </li>
@@ -208,7 +208,7 @@
 
         <ul class="b-crumbs">
             <li>
-                <a href="index.html">
+                <a href="../index.html">
                     Home
                 </a>
             </li>
@@ -234,13 +234,58 @@
                         <label for="rememberme">Remember me</label>
                     </p>
                     <p class="auth-lost_password">
-                        <a href="#">Lost your password?</a>
+                        <a href="#" id="lost-password-link">Lost your password?</a>
                     </p>
                 </form>
             </div>
 
+            
+              
+
+
             <!-- jQuery -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="../js/bootstrap.min.js"></script>
+            <script src="../js/jquery-3.7.1.min.js"></script>
+
+            <script>
+                $(document).ready(function(){
+                    // Xử lý sự kiện khi nhấn vào liên kết "Lost your password?"
+                    $('#lost-password-link').click(function(e) {
+                        e.preventDefault();
+                        $('#lost-password-modal').modal('show');
+                    });
+        
+                    // Xử lý submit form "Lost Password"
+                    $('#lost-password-form').submit(function(e) {
+                        e.preventDefault();
+        
+                        // Lấy dữ liệu từ form
+                        var email = $('#lost-email').val().trim();
+                        var phone = $('#lost-phone').val().trim();
+        
+                        // Kiểm tra dữ liệu đầu vào
+                        if (!isValidEmail(email) || !isValidPhone(phone)) {
+                            alert('Vui lòng nhập địa chỉ email và số điện thoại hợp lệ!');
+                            return;
+                        }
+        
+                        // Kiểm tra xem tài khoản có tồn tại trong Local Storage không
+                        var storedEmail = localStorage.getItem('email');
+                        var storedPhone = localStorage.getItem('phone');
+                        var storedPassword = localStorage.getItem('password');
+        
+                        if (storedEmail === email && storedPhone === phone) {
+                            alert('Mật khẩu của bạn là: ' + storedPassword);
+                        } else {
+                            alert('Không tìm thấy tài khoản với thông tin đã nhập.');
+                        }
+        
+                        // Đóng modal
+                        $('#lost-password-modal').modal('hide');
+                    });
+                });
+            </script>
 
             <!-- JavaScript code -->
             <script>
@@ -248,7 +293,7 @@
                     // Biểu thức chính quy để kiểm tra email
                     function isValidEmail(email) {
                         // Biểu thức chính quy kiểm tra cấu trúc email
-                        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        var emailPattern = /^[^\s@]+@gmail\.com$/;
                         return emailPattern.test(email);
                     }
                 
@@ -283,6 +328,7 @@
                         if (localStorage.getItem('email') === email && localStorage.getItem('password') === password) {
                             alert('Đăng nhập thành công!');
                             // Điều hướng hoặc thực hiện hành động khi đăng nhập thành công
+                            window.location.href = "../html/index.html";
                         } else {
                             alert('Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin đăng nhập.');
                         }
@@ -370,7 +416,31 @@
 
 </footer>
     <!-- Footer - end -->
-
+    <div class="modal fade" id="lost-password-modal" tabindex="-1" role="dialog" aria-labelledby="lost-password-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="lost-password-modal-label">Lost Password</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="lost-password-form">
+                <div class="form-group">
+                  <label for="lost-email">Email address</label>
+                  <input type="email" class="form-control" id="lost-email" required>
+                </div>
+                <div class="form-group">
+                  <label for="lost-phone">Phone number</label>
+                  <input type="tel" class="form-control" id="lost-phone" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
 <!-- jQuery plugins/scripts - start -->
 <script src="../js/jquery-1.11.2.min.js"></script>
