@@ -245,47 +245,9 @@
 
             <!-- jQuery -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script src="../js/bootstrap.min.js"></script>
-            <script src="../js/jquery-3.7.1.min.js"></script>
 
-            <script>
-                $(document).ready(function(){
-                    // Xử lý sự kiện khi nhấn vào liên kết "Lost your password?"
-                    $('#lost-password-link').click(function(e) {
-                        e.preventDefault();
-                        $('#lost-password-modal').modal('show');
-                    });
-        
-                    // Xử lý submit form "Lost Password"
-                    $('#lost-password-form').submit(function(e) {
-                        e.preventDefault();
-        
-                        // Lấy dữ liệu từ form
-                        var email = $('#lost-email').val().trim();
-                        var phone = $('#lost-phone').val().trim();
-        
-                        // Kiểm tra dữ liệu đầu vào
-                        if (!isValidEmail(email) || !isValidPhone(phone)) {
-                            alert('Vui lòng nhập địa chỉ email và số điện thoại hợp lệ!');
-                            return;
-                        }
-        
-                        // Kiểm tra xem tài khoản có tồn tại trong Local Storage không
-                        var storedEmail = localStorage.getItem('email');
-                        var storedPhone = localStorage.getItem('phone');
-                        var storedPassword = localStorage.getItem('password');
-        
-                        if (storedEmail === email && storedPhone === phone) {
-                            alert('Mật khẩu của bạn là: ' + storedPassword);
-                        } else {
-                            alert('Không tìm thấy tài khoản với thông tin đã nhập.');
-                        }
-        
-                        // Đóng modal
-                        $('#lost-password-modal').modal('hide');
-                    });
-                });
-            </script>
+
+            
 
             <!-- JavaScript code -->
             <script>
@@ -323,9 +285,14 @@
                             alert('Vui lòng nhập địa chỉ email hợp lệ!');
                             return;
                         }
-                
-                        // Kiểm tra xác thực
-                        if (localStorage.getItem('email') === email && localStorage.getItem('password') === password) {
+
+                        // Lấy dữ liệu từ Local Storage
+                        var usersData = JSON.parse(localStorage.getItem('users')) || [];
+
+                        // Kiểm tra xem thông tin đăng nhập có trùng khớp với dữ liệu trong Local Storage không
+                        var matchedUser = usersData.find(user => user.email === email && user.password === password);
+                        
+                        if (matchedUser) {
                             alert('Đăng nhập thành công!');
                             // Điều hướng hoặc thực hiện hành động khi đăng nhập thành công
                             window.location.href = "../html/index.html";
@@ -415,32 +382,7 @@
     </div>
 
 </footer>
-    <!-- Footer - end -->
-    <div class="modal fade" id="lost-password-modal" tabindex="-1" role="dialog" aria-labelledby="lost-password-modal-label" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="lost-password-modal-label">Lost Password</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form id="lost-password-form">
-                <div class="form-group">
-                  <label for="lost-email">Email address</label>
-                  <input type="email" class="form-control" id="lost-email" required>
-                </div>
-                <div class="form-group">
-                  <label for="lost-phone">Phone number</label>
-                  <input type="tel" class="form-control" id="lost-phone" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+    
 
 <!-- jQuery plugins/scripts - start -->
 <script src="../js/jquery-1.11.2.min.js"></script>
