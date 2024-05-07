@@ -348,12 +348,11 @@
                             $('#tbPhone').html("").removeClass("error");
                         }
 
+
                         // Kiểm tra số điện thoại đã được sử dụng chưa
                         if (usersData.some(user => user.phone === phone)) {
                             $('#tbPhone').html("*Số điện thoại đã được sử dụng cho một tài khoản khác !!").addClass("error");
                             isValid = false;
-                        } else {
-                            $('#tbPhone').html("").removeClass("error");
                         }
         
                         // Kiểm tra hợp lệ
